@@ -54,6 +54,7 @@ jobs:
           python manage.py test
 
       # Step 6: Assign reviewers to the pull request
+      # "Workflow permissions" need to be set to "Read and write permissions" in https://github.com/<account/org>/<repo_name>/settings/actions
       - name: Assign Reviewers to the Pull Request
         if: success()
         uses: kentaro-m/auto-assign-action@v2.0.0
