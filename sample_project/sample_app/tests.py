@@ -10,7 +10,3 @@ class SimpleTestCase(TestCase):
         """Test that two strings are equal."""
         self.assertEqual("hello", "hello", "The strings 'hello' and 'hello' should be equal.")
 
-    def test_failing_example(self):
-        """Intentional failing test for demonstration purposes."""
-        self.assertEqual(2 * 2, 5, "This test is designed to fail. 2 * 2 should not equal 5.")
-
