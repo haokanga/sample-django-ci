@@ -1,0 +1,63 @@
+name: Django CI and Reviewer Assignment for Pull Requests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - ready_for_review
+      - synchronize # A pull request's head branch was updated. For example, the head branch was updated from the base branch or new commits were pushed to the head branch.
+
+
+jobs:
+  build-and-assign:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository's code
+      - name: Checkout the pull request code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      # Step 2: Set up Python environment
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: |
+          echo "Installing Python dependencies"
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Set up Django environment
+      - name: Prepare Django Environment
+        env:
+          DJANGO_SETTINGS_MODULE: sample_project.settings  # Replace with your actual settings module
+        run: |
+          echo "Preparing Django environment"
+          python manage.py migrate
+
+      # Step 5: Run Django unit tests
+      - name: Run Django Unit Tests
+        env:
+          DJANGO_SETTINGS_MODULE: sample_project.settings  # Replace with your actual settings module
+        run: |
+          echo "Running Django unit tests"
+          python manage.py test
+
+      # Step 6: Assign reviewers to the pull request
+      - name: Assign Reviewers to the Pull Request
+        if: success()
+        uses: kentaro-m/auto-assign-action@v2.0.0
+        with:
+          configuration-path: '.github/auto_assign.yml'
+      #  Step 6 alternative: Notify the results
+      - name: Notify test and assignment results
+        if: failure()
+        run: echo "Tests failed. Reviewers will not be assigned."
