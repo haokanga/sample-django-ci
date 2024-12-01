@@ -23,10 +23,10 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       # Step 2: Set up Python environment
-      - name: Set up Python 3.9
+      - name: Set up Python 3.12
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       # Step 3: Install dependencies
       - name: Install Dependencies
