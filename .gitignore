@@ -1,0 +1,48 @@
+# Virtual environment
+venv/
+env/
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+db.sqlite3
+db.sqlite3-journal
+
+# Media and static files
+/media
+/staticfiles
+
+# Environment variables
+.env
+
+# IDE specific files
+.vscode/
+.idea/
+
+# MacOS specific files
+.DS_Store
+
+# Linux specific files
+*.swp
+
+# Coverage reports
+.coverage
+*.coverage
+htmlcov/
+
+# Testing reports
+.junit.xml
+.pytest_cache/
+test_results/
+
+# Build files
+*.egg
+*.egg-info/
+dist/
+build/
