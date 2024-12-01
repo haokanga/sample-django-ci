@@ -37,6 +37,7 @@ jobs:
 
       # Step 4: Set up Django environment
       - name: Prepare Django Environment
+        working-directory: sample_project
         env:
           DJANGO_SETTINGS_MODULE: sample_project.settings  # Replace with your actual settings module
         run: |
@@ -45,6 +46,7 @@ jobs:
 
       # Step 5: Run Django unit tests
       - name: Run Django Unit Tests
+        working-directory: sample_project
         env:
           DJANGO_SETTINGS_MODULE: sample_project.settings  # Replace with your actual settings module
         run: |
