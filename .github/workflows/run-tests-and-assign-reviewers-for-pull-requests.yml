@@ -23,10 +23,10 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       # Step 2: Set up Python environment
-      - name: Set up Python 3.9
+      - name: Set up Python 3.12
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       # Step 3: Install dependencies
       - name: Install Dependencies
@@ -37,6 +37,7 @@ jobs:
 
       # Step 4: Set up Django environment
       - name: Prepare Django Environment
+        working-directory: sample_project
         env:
           DJANGO_SETTINGS_MODULE: sample_project.settings  # Replace with your actual settings module
         run: |
@@ -45,6 +46,7 @@ jobs:
 
       # Step 5: Run Django unit tests
       - name: Run Django Unit Tests
+        working-directory: sample_project
         env:
           DJANGO_SETTINGS_MODULE: sample_project.settings  # Replace with your actual settings module
         run: |
@@ -52,6 +54,7 @@ jobs:
           python manage.py test
 
       # Step 6: Assign reviewers to the pull request
+      # "Workflow permissions" need to be set to "Read and write permissions" in https://github.com/<account/org>/<repo_name>/settings/actions
       - name: Assign Reviewers to the Pull Request
         if: success()
         uses: kentaro-m/auto-assign-action@v2.0.0
